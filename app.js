@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
 var expressSession = require('express-session');
 
 var index = require('./routes/index');
@@ -24,7 +23,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(expressValidator());
 app.use(expressSession({secret: 'This is my secret you know', saveUninitialized: false, resave: false}));
 
 app.use('/', index);
