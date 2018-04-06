@@ -38,13 +38,14 @@ router.post('/submit',
 
         console.log(dbconfig);
         var connection = mysql.createConnection(dbconfig);
-
         connection.query("INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`) VALUES (" + "\'" + username +  "\'"  + "\,"   + "\'" + password +  "\'"  + "\,"   + "\'" + first_name +  "\'"  + "\,"   + "\'" + last_name +  "\'"  + "\,"   + "\'" + email +  "\'"   + ")", function (error, results, fields) {
             if (error) {
                   console.log(error);
+                  connection.end();
 
             } else {
                  console.log(results);
+                 connection.end();
             }
         });
 
