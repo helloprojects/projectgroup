@@ -5,7 +5,6 @@ const { matchedData, sanitize } = require('express-validator/filter');
 var mysql = require('mysql');
 var dbconfig = require('../config/dbconfig');
 
-  
 /**
  * GET register page
  */
@@ -14,7 +13,6 @@ router.get('/', function (req, res, next) {
         title: 'Register an account' });
 });
 
- 
 /**
  * Account Registration
  * POST
@@ -28,31 +26,26 @@ router.post('/submit',
         sanitize('email').trim().escape()
     ],
     function (req, res, next) {
-        username = req.body.firstname;
-        password = req.body.lastname;
-        first_name = req.body.firstname;
-        last_name = req.body.lastname;
-        email = req.body.email;
-        console.log(username)
-        console.log(password)
-        console.log(first_name)
-        console.log(last_name)
-        console.log(email)
+        var username = req.body.username;
+        var password = req.body.password;
+        var first_name = req.body.firstname;
+        var last_name = req.body.lastname;
+        var email = req.body.email;
         var connection = mysql.createConnection(dbconfig);
         connection.query("INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`) VALUES (" + "\'" + username +  "\'"  + "\,"   + "\'" + password +  "\'"  + "\,"   + "\'" + first_name +  "\'"  + "\,"   + "\'" + last_name +  "\'"  + "\,"   + "\'" + email +  "\'"   + ")", function (error, results, fields) {
             if (error) {
                   console.log(error);
                   connection.end();
                   res.render('index', { 
-                    title: 'Registered',
+                    title: 'Movie List - Home Page',
                     message: 'Failed to register.'    
                   });
             } else {
                  console.log(results);
                  connection.end();
                  res.render('index', { 
-                     title: 'Registered',
-                     message: 'Success, an account has been created.'    
+                     title: 'Movie List - Home Page',
+                     message: 'Success, an account has been created, you can now log-in.'    
                 });
             }
         });

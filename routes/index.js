@@ -31,7 +31,7 @@ router.post('/submit',
                   console.log(error);
                   connection.end();
                   res.render('index', { 
-                    title: 'Registered',
+                    title: 'Movie List - Home Page',
                     message: 'Failed to login.'    
                   });
             } else {
