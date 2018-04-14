@@ -6,12 +6,19 @@ var mysql = require('mysql');
 var dbconfig = require('../config/dbconfig');
 
   
-/* GET register page. */
+/**
+ * GET register page
+ */
 router.get('/', function (req, res, next) {
-    res.render('register', { title: 'Register an account' });
+    res.render('register', { 
+        title: 'Register an account' });
 });
 
-/* POST register page. */
+ 
+/**
+ * Account Registration
+ * POST
+ */
 router.post('/submit',
     [
         sanitize('username').trim().escape(),
@@ -20,37 +27,35 @@ router.post('/submit',
         sanitize('last_name').trim().escape(),
         sanitize('email').trim().escape()
     ],
-
- 
-
     function (req, res, next) {
         username = req.body.firstname;
         password = req.body.lastname;
         first_name = req.body.firstname;
         last_name = req.body.lastname;
         email = req.body.email;
-       
         console.log(username)
         console.log(password)
         console.log(first_name)
         console.log(last_name)
         console.log(email)
-
-        console.log(dbconfig);
         var connection = mysql.createConnection(dbconfig);
         connection.query("INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`) VALUES (" + "\'" + username +  "\'"  + "\,"   + "\'" + password +  "\'"  + "\,"   + "\'" + first_name +  "\'"  + "\,"   + "\'" + last_name +  "\'"  + "\,"   + "\'" + email +  "\'"   + ")", function (error, results, fields) {
             if (error) {
                   console.log(error);
                   connection.end();
-
+                  res.render('index', { 
+                    title: 'Registered',
+                    message: 'Failed to register.'    
+                  });
             } else {
                  console.log(results);
                  connection.end();
+                 res.render('index', { 
+                     title: 'Registered',
+                     message: 'Success, an account has been created.'    
+                });
             }
         });
-
-        // res.render('index', { title: 'Registered' });
     });
-
 
 module.exports = router;

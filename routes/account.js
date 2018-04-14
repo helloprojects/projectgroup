@@ -7,12 +7,16 @@ var dbconfig = require('../config/dbconfig');
 
 
 /* POST account page. */
-router.post('/', sanitize('username').trim().escape(), sanitize('password').trim().escape(), function (req, res, next) {
-   
-    var username = req.body.username;
-    var password = req.body.username;
+router.post('/', 
 
+    [
+    sanitize('username').trim().escape(), 
+    sanitize('password').trim().escape()
+    ],
     
+    function (req, res, next) {
+    var username = req.body.username;
+    var password = req.body.password;
     res.render('account', {
         title: 'Your Movies',
         username: username,
